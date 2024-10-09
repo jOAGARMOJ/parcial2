@@ -17,6 +17,9 @@ class Reserva {
         this.costoTotal = costoTotal;
     }
 
+    public Reserva(Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin, boolean seguro, boolean gps) {
+    }
+
     public void confirmarReserva() {
         vehiculo.setDisponibilidad(false);
         System.out.println("Reserva confirmada para el vehículo: " + vehiculo);
