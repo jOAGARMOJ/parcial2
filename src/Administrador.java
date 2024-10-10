@@ -42,6 +42,11 @@ class Administrador {
         }
         return false;
     }
+    public void registrarClienteConVehiculo(Cliente cliente) {
+        if (!clientesConVehiculoAlquilado.contains(cliente)) {
+            clientesConVehiculoAlquilado.add(cliente);
+        }
+    }
 
 
 }

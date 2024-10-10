@@ -112,7 +112,7 @@ public class Main {
             LocalDate fechaInicio = null;
             LocalDate fechaFin = null;
 
-            // Captura de fecha de inicio con manejo de excepciones
+
             while (fechaInicio == null) {
                 try {
                     System.out.println("Ingrese la fecha de inicio de la reserva (formato AAAA-MM-DD):");
@@ -122,7 +122,7 @@ public class Main {
                 }
             }
 
-            // Captura de fecha de fin con manejo de excepciones
+
             while (fechaFin == null) {
                 try {
                     System.out.println("Ingrese la fecha de fin de la reserva (formato AAAA-MM-DD):");
@@ -137,6 +137,16 @@ public class Main {
             System.out.println("¿Desea incluir GPS? (true/false):");
             boolean gps = scanner.nextBoolean();
             scanner.nextLine();
+
+            if (admin.verificarDisponibilidad(vehiculoSeleccionado, fechaInicio, fechaFin)) {
+                cliente.reservarVehiculo(vehiculoSeleccionado, fechaInicio, fechaFin, seguro, gps);
+                System.out.println("Reserva confirmada con éxito.");
+
+                // Registrar al cliente como alquilador
+                admin.registrarClienteConVehiculo(cliente);
+            } else {
+                System.out.println("El vehículo no está disponible en las fechas seleccionadas.");
+            }
 
             cliente.reservarVehiculo(vehiculoSeleccionado, fechaInicio, fechaFin, seguro, gps);
 
