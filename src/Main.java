@@ -64,7 +64,22 @@ public class Main {
         String idCliente = scanner.nextLine();
         System.out.println("Ingrese su nombre:");
         String nombre = scanner.nextLine();
+
+        if (admin.clienteTieneVehiculoAlquiladoPorNombre(nombre)) {
+            System.out.println("Ya tienes un vehículo alquilado y no puedes alquilar más.");
+            return;
+        }
+
         Cliente cliente = new Cliente(idCliente, nombre);
+
+
+
+
+
+
+
+
+
 
         System.out.println("Seleccione el tipo de vehículo que desea alquilar:");
         System.out.println("1. Auto");
@@ -121,9 +136,14 @@ public class Main {
             boolean seguro = scanner.nextBoolean();
             System.out.println("¿Desea incluir GPS? (true/false):");
             boolean gps = scanner.nextBoolean();
-            scanner.nextLine(); // Limpiar el buffer
+            scanner.nextLine();
 
-            // Verifica la disponibilidad del vehículo antes de reservar
+            cliente.reservarVehiculo(vehiculoSeleccionado, fechaInicio, fechaFin, seguro, gps);
+
+            double costoTotal = vehiculoSeleccionado.calcularPrecio((int) (fechaFin.toEpochDay() - fechaInicio.toEpochDay()), seguro, gps);
+            System.out.printf("El costo total del alquiler es: %.2f%n", costoTotal);
+
+
             if (admin.verificarDisponibilidad(vehiculoSeleccionado, fechaInicio, fechaFin)) {
                 cliente.reservarVehiculo(vehiculoSeleccionado, fechaInicio, fechaFin, seguro, gps);
                 System.out.println("Reserva confirmada con éxito.");
@@ -181,7 +201,7 @@ public class Main {
         System.out.println("Vehículo añadido a la flota.");
     }
 
-    // Método para elegir vehículo del cliente según el tipo
+
     private static Vehiculo elegirVehiculo(Administrador admin, Class<?> tipoClase) {
         List<Vehiculo> disponibles = admin.listarVehiculosDisponibles();
         List<Vehiculo> filtrados = new ArrayList<>();
